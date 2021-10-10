@@ -166,3 +166,7 @@ textarea {
   margin-bottom: 0.2em;
   max-width: 500px;
 }
+ .btn-link{
+   color:#ff6600 !important;
+   background-color: transparent !important;
+ }

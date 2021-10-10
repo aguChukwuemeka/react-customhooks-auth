@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useFormValidation from "./useFormValidation";
 import validateLogin from "./validateLogin";
+// import firebase from "firebase";
 
 const INITIAL_STATE = {
   name: "",
@@ -16,8 +17,17 @@ export default function Login(props) {
     values,
     isSubmitting,
     errors,
-  } = useFormValidation(INITIAL_STATE, validateLogin);
+  } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser);
   const [login, setLogin] = useState(false);
+
+  const authenticateUser =async()=> {
+    const { name, email, password } = values;
+    // const response = login
+    //   ? await firebase.login(email, password)
+    //   : await firebase.registar(name, email, password);
+    // console.log({ response });
+  }
+
   return (
     <div>
       <h2 className="mv3">{login ? "Create Account" : "Login Account"}</h2>
@@ -28,11 +38,11 @@ export default function Login(props) {
               type="text"
               name="name"
               value={values.name}
-              onBlur={handleBlur}
               placeholder="Your name"
-              className={`form-control ${errors.name && "error-input"}`}
+              className="form-control"
               autoComplete="off"
               onChange={handleChange}
+              required
             />
           </div>
         )}
@@ -65,21 +75,21 @@ export default function Login(props) {
         {errors.password && (
           <span className="error-text">{errors.password}</span>
         )}
-        <div className="flex mt3">
+        <div className="flex mt-3">
           <button
             type="submit"
-            className="btn btn-sm btn-outline-success"
+            className="btn btn-sm btn-outline-info"
             disabled={isSubmitting}
-            style={{ background: isSubmitting ? "grey" : "orange" }}
+            style={{ background: isSubmitting ? "grey" : "#00C8F3", color: 'black' }}
           >
             {login ? "submit" : "login"}
           </button>
           <button
             type="button"
             onClick={() => setLogin((prevLogin) => !prevLogin)}
-            className="btn-sm btn border-0 ms-3"
+            className="btn-sm btn-link border-0 ms-3"
           >
-            {login ? "already have an account..." : "create an account"}
+            {login ? "already have an account..." : "create an account..."}
           </button>
         </div>
       </form>
